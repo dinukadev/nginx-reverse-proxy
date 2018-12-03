@@ -1,4 +1,4 @@
-FROM 946635200951.dkr.ecr.ap-southeast-2.amazonaws.com/infra-os-debian:buster
+FROM gcr.io/octo-bof-dec-03-2018/infra-os:latest
 
 LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
@@ -94,9 +94,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 ADD ssl.conf /etc/nginx/conf.d/
 ADD nginx.conf /etc/nginx/
-ADD ssl/genome_one.crt /etc/ssl/
-ADD ssl/genome.one.master.key.rsa /etc/ssl/
-ADD ssl/genome_one.pass /etc/ssl/
+
 
 RUN mkdir /usr/share/nginx/html/demo
 RUN chmod a+w /usr/share/nginx/html/demo

@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-reverse-proxy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-reverse-proxy
+    spec:
+      containers:
+      - name: nginx-reverse-proxy
+        image: gcr.io/octo-bof-dec-03-2018/nginx:latest
+        imagePullPolicy: Always
+        resources:
+         requests:
+           cpu: "60m"
+        ports:
+          - name: http
+            containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: nginx-reverse-proxy
+  name: nginx-reverse-proxy
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 30080
+    targetPort: 80
+  selector:
+    app: nginx-reverse-proxy
